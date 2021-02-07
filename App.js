@@ -10,6 +10,7 @@ import GalleryScreen from './components/screens/GalleryScreen.js';
 import PreviewScreen from './components/screens/PreviewScreen.js';
 import QuestionScreen from './components/screens/QuestionScreen.js';
 import ScriptScreen from './components/screens/ScriptScreen.js';
+import FileScreen from './components/screens/FileScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ function App() {
         <Stack.Screen name="Preview" component={PreviewScreen} />
         <Stack.Screen name="Question" component={QuestionScreen} />
         <Stack.Screen name="Script" component={ScriptScreen} />
+        <Stack.Screen name="File" component={FileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

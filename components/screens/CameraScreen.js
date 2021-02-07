@@ -12,7 +12,7 @@ export default function CameraScreen({navigation}) {
  //get user permission
  useEffect(() => {
    (
-     async () => {
+     async () => {;
        const { status } = await Camera.requestPermissionsAsync();
        setHasPermission(status === 'granted');
      }
@@ -65,17 +65,17 @@ export default function CameraScreen({navigation}) {
               setRecording(true);
 
               //get photo promise
-              let photo = cameraRef.recordAsync('photo',{maxDuration:3});
+              let video = cameraRef.recordAsync('video');
 
               //start timer and finish by 5 second
               setTimeout(()=>{
                 cameraRef.stopRecording();
                 setRecording(null);
-              },5000)
+              },4000)
 
               //get your photo after promise is returned (when recordAsync finishes)
-              photo = await photo;
-              navigation.navigate('Preview',{'photo':photo});
+              video = await video;
+              navigation.navigate('Preview',{video});
             } else {
               cameraRef.stopRecording()
               setRecording(null);

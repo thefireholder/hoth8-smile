@@ -3,12 +3,12 @@ import { View, Text, Button } from 'react-native';
 
 
 export default function DetailsScreen({ navigation }) {
-  
+
     function goto(place){
       navigation.navigate(place);
-  
+
     }
-  
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
@@ -36,7 +36,10 @@ export default function DetailsScreen({ navigation }) {
           title="go to script"
           onPress={()=>goto("Script")}
         />
+        <Button
+          title="DEVELOPER file"
+          onPress={()=>goto("File")}
+        />
       </View>
     );
   }
-  
