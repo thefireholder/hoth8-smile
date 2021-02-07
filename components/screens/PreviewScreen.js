@@ -8,13 +8,13 @@ import moment from 'moment';
 
 export default function notification({ route, navigation }) {
 
-  React.useEffect(()=>{
-    //set audio
-    (async () => await Audio.setAudioModeAsync({playsInSilentModeIOS: true,}))();
-  },[])
-
-
  const videoUri = route.params ? route.params.video.uri : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+
+ React.useEffect(()=>{
+   //set audio
+   (async () => await Audio.setAudioModeAsync({playsInSilentModeIOS: true,}))();
+   
+ },[])
 
  const save = async () => {
 
@@ -38,11 +38,12 @@ export default function notification({ route, navigation }) {
    FileSystem.makeDirectoryAsync(FileSystem.documentDirectory+'Video', {intermediates:true})
    FileSystem.copyAsync({
      from: videoUri,
-     to: FileSystem.documentDirectory+'Video/video'+moment().format('YYYY-MM-DD_hh:mm:ssa')
+     to: FileSystem.documentDirectory+'Video/'+moment().format('YYYY-MM-DD_hh:mm:ssa')
    })
+   FileSystem.makeDirectoryAsync(FileSystem.documentDirectory+'Thumbnail', {intermediates:true})
    FileSystem.copyAsync({
      from: thumbnailUri,
-     to: FileSystem.documentDirectory+'Video/thumbnail'+moment().format('YYYY-MM-DD_hh:mm:ssa')
+     to: FileSystem.documentDirectory+'Thumbnail/'+moment().format('YYYY-MM-DD_hh:mm:ssa')
    })
 
    //go back to beginning

@@ -4,25 +4,26 @@ import * as FileSystem from 'expo-file-system';
 
 export default function notification({ route, navigation }) {
 
-const [a,setA] = React.useState('none');
-const [aa,setAA] = React.useState('none');
+const [cd,setCD] = React.useState('none');
+const [dd,setDD] = React.useState('none');
 const [n,setN] = React.useState(100);
 const [clist,setClist] = React.useState([]);
 const [flist,setFlist] = React.useState([]);
 
 React.useEffect(()=>{
   (async ()=>{
-    const b = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory);
-    const bb = await FileSystem.readDirectoryAsync(FileSystem.cacheDirectory);
-    setA(b[0]);
-    setAA(bb[0]);
-    setN(bb.length);
+    const dd = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory);
+    const cd = await FileSystem.readDirectoryAsync(FileSystem.cacheDirectory);
+    setCD(cd[0]);
+    setDD(dd[0]);
+    setN(cd.length);
 
-    const bb1 = await FileSystem.readDirectoryAsync(FileSystem.cacheDirectory+bb[0]);
+
+    const bb1 = cd[0] ? await FileSystem.readDirectoryAsync(FileSystem.cacheDirectory+cd[0]) : [];
     setN(bb1.length);
     setClist(bb1);
-    
-    const bb2 = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory+b[0]);
+
+    const bb2 = dd[0] ? await FileSystem.readDirectoryAsync(FileSystem.documentDirectory+dd[0]) : [];
     setFlist(bb2);
   })();
 },[])
@@ -44,15 +45,15 @@ const numbers = [1, 2, 3, 4, 5];
 
  return (
  <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
-  <Text>a=</Text>
-  <Text>{a}</Text>
+  <Text>dd=</Text>
+  <Text>{dd}</Text>
   <FlatList
     data={flist}
     renderItem={({item})=>(<Text>{item}</Text>)}
     keyExtractor={item => item}
   />
-   <Text>b=</Text>
-   <Text>{aa}</Text>
+   <Text>cd=</Text>
+   <Text>{cd}</Text>
    <Text>{n}</Text>
    <FlatList
      data={clist}
