@@ -75,7 +75,7 @@ export default function CameraScreen({navigation}) {
 
               //get your photo after promise is returned (when recordAsync finishes)
               video = await video;
-              navigation.navigate('Preview',{video});
+              navigation.navigate('Preview',{video:video.uri});
             } else {
               cameraRef.stopRecording()
               setRecording(null);

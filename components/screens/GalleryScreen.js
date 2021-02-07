@@ -1,7 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Flatlist, Alert,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Flatlist, Alert,TouchableOpacity,ScrollView } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
+const softColor = ['#F3DCD4aF','#ECC9C7aF','#D9E3DAaF','#D1CFC0aF','#C2C2B4aF']
+
+function softColorSet(i){
+  return softColor[i%softColor.length]
+}
 
 export default function GalleryScreen({navigation}) {
 
@@ -21,16 +26,14 @@ export default function GalleryScreen({navigation}) {
       .map(_ => c.splice(0, n))
 
     setUri(result);
-
     })();
   },[])
 
 
     return (
-      <View style={styles.container}>
+      <ScrollView>
         <View
           style={{
-            marginTop: 10,
             borderWidth: 2,
             borderColor:'transparent',
             height:'100%',
@@ -38,7 +41,7 @@ export default function GalleryScreen({navigation}) {
           }}
         >
         {
-          Uri.map((function(uris){
+          Uri.map((function(uris,i){
 
             return(
               <View style={{flexDirection:'row'}} key={uris[0]}>
@@ -50,6 +53,7 @@ export default function GalleryScreen({navigation}) {
                       uri: uris[0],
                       }}
                     />
+                    <View style={{backgroundColor:softColorSet(i*3+0),position:'absolute',height:'100%',width:'100%'}}/>
                   </TouchableOpacity>
                 </View>
               <View style={{margin:1,backgroundColor:'transparent',aspectRatio: 1,flex:1}}>
@@ -63,6 +67,7 @@ export default function GalleryScreen({navigation}) {
                       uri: uris[1],
                       }}
                     />
+                    {uris[1]?<View style={{backgroundColor:softColorSet(i*3+1),position:'absolute',height:'100%',width:'100%'}}/>:null}
                   </TouchableOpacity>
               </View>
               <View style={{margin:1,backgroundColor:'transparent',aspectRatio: 1,flex:1}}>
@@ -76,6 +81,7 @@ export default function GalleryScreen({navigation}) {
                       uri: uris[2],
                       }}
                     />
+                    {uris[2]?<View style={{backgroundColor:softColorSet(i*3+2),position:'absolute',height:'100%',width:'100%'}}/>:null}
                 </TouchableOpacity>
               </View>
             </View>
@@ -83,7 +89,7 @@ export default function GalleryScreen({navigation}) {
           }))
         }
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

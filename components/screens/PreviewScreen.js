@@ -8,7 +8,7 @@ import moment from 'moment';
 
 export default function PreviewScreen({ route, navigation }) {
 
- const videoUri = route.params ? route.params.video.uri : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+ const videoUri = route.params ? route.params.video : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
  React.useEffect(()=>{
    //set audio
@@ -17,9 +17,10 @@ export default function PreviewScreen({ route, navigation }) {
  },[])
 
  const save = async () => {
+   if(!loaded) return
 
    //check for video uri
-   const videoUri = route.params?.video.uri;
+   const videoUri = route.params?.video;
    if (!videoUri) return;
 
    //create thumbnail
@@ -47,30 +48,40 @@ export default function PreviewScreen({ route, navigation }) {
    })
 
    //go back to beginning
-   navigation.dispatch(
-     CommonActions.reset({
-       index: 1,
-       routes: [
-         { name: 'Question' }
-       ],
-     })
-   );
+
+
+   navigation.pop(2);
+
 
  };
 
+
+ const [loaded, setLoaded] = React.useState(false);
+ const _handleVideoRef = component => {
+   const playbackObject = component;
+   setLoaded(true);
+ }
+
   return (
      <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
-       <Video
-         source={{ uri: videoUri }}
-         rate={1.0}
-         volume={1.0}
-         isMuted={false}
-         resizeMode="cover"
-         shouldPlay
-         isLooping
-         style={{ width: '100%', aspectRatio: 1 }}
-       />
-       <Button onPress={save} title="Save your smile" />
+
+       <View style={{ width: '100%', aspectRatio: 1, justifyContent:'center',alignItems:'center' }}>
+         <Text style={{ fontSize:20}}>Processing your smile..</Text>
+         <Video
+           onReadyForDisplay={_handleVideoRef}
+           source={{ uri: videoUri }}
+           rate={1.0}
+           volume={1.0}
+           isMuted={false}
+           resizeMode="cover"
+           shouldPlay
+           isLooping
+           style={{ position:'absolute',width: '100%', aspectRatio: 1 }}
+         />
+       </View>
+
+       <Button onPress={save} title={loaded?"Save your smile":''}/>
+
     </View>
   );
 }

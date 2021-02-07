@@ -19,9 +19,17 @@ export default function MemoryScreen({ route, navigation }) {
    Alert.alert('delete')
  };
 
+
+ const [loaded, setLoaded] = React.useState(false);
+ const _handleVideoRef = component => {
+   const playbackObject = component;
+   setLoaded(true);
+ }
+
   return (
-     <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
+     <View style={{ backgroundColor:'black',flex: 1, alignItems:'center',justifyContent:'center' }}>
        <Video
+         onReadyForDisplay={_handleVideoRef}
          source={{ uri: videoUri }}
          rate={1.0}
          volume={1.0}
@@ -37,7 +45,9 @@ export default function MemoryScreen({ route, navigation }) {
          <View style={{flex:1}}/>
          <View style={{backgroundColor:'#ffffff90', alignItems:'center'}}>
           <TouchableOpacity onPress={deleteFile}>
-            <Text style={{ margin:10, fontSize:20, fontWeight: "bold", color:'#00942390'}} >Hey you got this !</Text>
+            <Text style={{ margin:10, fontSize:20, fontWeight: "bold", color:'black'}} >
+              {loaded?"Hey you got this !":"Hidden Message"}
+            </Text>
           </TouchableOpacity>
          </View>
          <View style={{flex:4}}/>
