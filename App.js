@@ -11,6 +11,7 @@ import PreviewScreen from './components/screens/PreviewScreen.js';
 import QuestionScreen from './components/screens/QuestionScreen.js';
 import ScriptScreen from './components/screens/ScriptScreen.js';
 import FileScreen from './components/screens/FileScreen.js';
+import MemoryScreen from './components/screens/MemoryScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ function App() {
         <Stack.Screen name="Question" component={QuestionScreen} />
         <Stack.Screen name="Script" component={ScriptScreen} />
         <Stack.Screen name="File" component={FileScreen} />
+        <Stack.Screen name="Memory" component={MemoryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

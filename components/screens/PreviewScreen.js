@@ -6,14 +6,14 @@ import * as VideoThumbnails from 'expo-video-thumbnails';
 import { CommonActions } from '@react-navigation/native';
 import moment from 'moment';
 
-export default function notification({ route, navigation }) {
+export default function PreviewScreen({ route, navigation }) {
 
  const videoUri = route.params ? route.params.video.uri : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
  React.useEffect(()=>{
    //set audio
    (async () => await Audio.setAudioModeAsync({playsInSilentModeIOS: true,}))();
-   
+
  },[])
 
  const save = async () => {
@@ -33,17 +33,17 @@ export default function notification({ route, navigation }) {
    }
    if (!thumbnailUri) return;
 
-
    // export them to permanent directory
+   const time = moment().format('YYYY-MM-DD_hh:mm:ssa').toString()
    FileSystem.makeDirectoryAsync(FileSystem.documentDirectory+'Video', {intermediates:true})
    FileSystem.copyAsync({
      from: videoUri,
-     to: FileSystem.documentDirectory+'Video/'+moment().format('YYYY-MM-DD_hh:mm:ssa')
+     to: FileSystem.documentDirectory+'Video/'+time+'.mov'
    })
    FileSystem.makeDirectoryAsync(FileSystem.documentDirectory+'Thumbnail', {intermediates:true})
    FileSystem.copyAsync({
      from: thumbnailUri,
-     to: FileSystem.documentDirectory+'Thumbnail/'+moment().format('YYYY-MM-DD_hh:mm:ssa')
+     to: FileSystem.documentDirectory+'Thumbnail/'+time
    })
 
    //go back to beginning

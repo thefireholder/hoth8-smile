@@ -1,28 +1,33 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Flatlist } from 'react-native';
+import { StyleSheet, Text, View, Image, Flatlist, Alert,TouchableOpacity } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 
 
+export default function GalleryScreen({navigation}) {
 
-export default function GalleryScreen() {
+  const [Uri,setUri] = React.useState([]);
+  React.useEffect(()=>{
+    (async ()=>{
 
-    const Uri = [
-      ['https://reactnative.dev/img/tiny_logo.png',
-      'https://reactnative.dev/img/tiny_logo.png',
-      'https://reactnative.dev/img/tiny_logo.png'],
-      ['https://reactnative.dev/img/tiny_logo.png',
-      'https://reactnative.dev/img/tiny_logo.png',
-      'https://reactnative.dev/img/tiny_logo.png'],
-      ['https://reactnative.dev/img/tiny_logo.png',
-      'https://reactnative.dev/img/tiny_logo.png',
-      'https://reactnative.dev/img/tiny_logo.png'],
-    ]
+    //get list of pics
+    const pic = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory+'Thumbnail');
+    // setUri([[FileSystem.documentDirectory+'Thumbnail/'+pic[0],FileSystem.documentDirectory+'Thumbnail/'+pic[0]]])
+    const c = pic.map(item=>(FileSystem.documentDirectory+'Thumbnail/'+item))
+
+    //splice it up into three
+    const n = 3 //tweak this to add more items per line
+    const result = new Array(Math.ceil(c.length / n))
+      .fill()
+      .map(_ => c.splice(0, n))
+
+    setUri(result);
+
+    })();
+  },[])
+
 
     return (
       <View style={styles.container}>
-       
-
-
-
         <View
           style={{
             marginTop: 10,
@@ -32,87 +37,51 @@ export default function GalleryScreen() {
             width:'100%',
           }}
         >
-          <View style={{borderWidth: 1, borderColor:'transparent',flexDirection:'row'}}>
-            <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                style={styles.photoLogo}
-                source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-              />
-            </View>
-          <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                  style={styles.photoLogo}
-                  source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                  }}
-                />
-            </View>
-            <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                  style={styles.photoLogo}
-                  source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                  }}
-                />
-            </View>
-          </View>
+        {
+          Uri.map((function(uris){
 
-          <View style={{borderWidth: 1, borderColor:'transparent',flexDirection:'row'}}>
-            <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                style={styles.photoLogo}
-                source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-              />
+            return(
+              <View style={{flexDirection:'row'}} key={uris[0]}>
+                <View style={{margin:1,backgroundColor:'transparent',aspectRatio: 1,flex:1}}>
+                  <TouchableOpacity onPress={()=>navigation.navigate('Memory',{uri:uris[0]})}>
+                    <Image
+                      style={styles.photoLogo}
+                      source={{
+                      uri: uris[0],
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              <View style={{margin:1,backgroundColor:'transparent',aspectRatio: 1,flex:1}}>
+                <TouchableOpacity onPress={()=>{
+                  if(uris[1])
+                  navigation.navigate('Memory',{uri:uris[1]});
+                }}>
+                  <Image
+                      style={styles.photoLogo}
+                      source={{
+                      uri: uris[1],
+                      }}
+                    />
+                  </TouchableOpacity>
+              </View>
+              <View style={{margin:1,backgroundColor:'transparent',aspectRatio: 1,flex:1}}>
+                <TouchableOpacity onPress={()=>{
+                  if(uris[2])
+                  navigation.navigate('Memory',{uri:uris[2]});
+                }}>
+                  <Image
+                      style={styles.photoLogo}
+                      source={{
+                      uri: uris[2],
+                      }}
+                    />
+                </TouchableOpacity>
+              </View>
             </View>
-          <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                  style={styles.photoLogo}
-                  source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                  }}
-                />
-            </View>
-            <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                  style={styles.photoLogo}
-                  source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                  }}
-                />
-            </View>
-          </View>
-
-          <View style={{borderWidth: 1, borderColor:'transparent',flexDirection:'row'}}>
-            <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                style={styles.photoLogo}
-                source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-              />
-            </View>
-          <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                  style={styles.photoLogo}
-                  source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                  }}
-                />
-            </View>
-            <View style={{backgroundColor:'white',aspectRatio: 1,width:"33.33%"}}>
-              <Image
-                  style={styles.photoLogo}
-                  source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                  }}
-                />
-            </View>
-          </View>
-
+            )
+          }))
+        }
       </View>
     </View>
   );

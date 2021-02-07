@@ -6,7 +6,7 @@ export default function CameraScreen({navigation}) {
 
  const [hasPermission, setHasPermission] = useState(null);
  const [cameraRef, setCameraRef] = useState(null)
- const [type, setType] = useState(Camera.Constants.Type.back);
+ const [type, setType] = useState(Camera.Constants.Type.front);
  const [recording, setRecording] = useState(null);
 
  //get user permission
