@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 
 export default function CameraScreen({navigation}) {
@@ -36,12 +36,10 @@ export default function CameraScreen({navigation}) {
      <View
       style={{
         flex: 1,
-        backgroundColor: 'transparent',
         justifyContent: 'flex-end'
       }}>
        <TouchableOpacity
         style={{
-          flex: 0.1,
           alignSelf: 'flex-end'
         }}
         onPress={() => {
@@ -51,38 +49,44 @@ export default function CameraScreen({navigation}) {
             : Camera.Constants.Type.back
           );
       }}>
-      <Text style= {{fontSize:18,marginBottom:10,color:'white'}}>Flip</Text>
+        <Text style= {{fontSize:18,marginRight:20,color:'white'}}>Flip</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{alignSelf: 'center'}} onPress={async() => {
-       if(cameraRef){
-         // let photo = await cameraRef.takePictureAsync('photo');
-         // navigation.navigate('Image',{'photo':photo});
 
+      <TouchableOpacity
+        style={{alignSelf: 'center'}}
+        onPress={async() => {
+          if(cameraRef){
+            //taking picture
+            // let photo = await cameraRef.takePictureAsync('photo');
+            // navigation.navigate('Image',{'photo':photo});
 
-        //recording
-        if(!recording){
-          setRecording(true);
-          let photo = cameraRef.recordAsync('photo',{maxDuration:3});
+            //recording
+            if(!recording){
+              setRecording(true);
 
-          setTimeout(()=>{
-            cameraRef.stopRecording();
-            setRecording(null);
-          },5000)
+              //get photo promise
+              let photo = cameraRef.recordAsync('photo',{maxDuration:3});
 
-          photo = await photo;
+              //start timer and finish by 5 second
+              setTimeout(()=>{
+                cameraRef.stopRecording();
+                setRecording(null);
+              },5000)
 
-          navigation.navigate('Preview',{'photo':photo});
-        } else {
-            cameraRef.stopRecording()
-            setRecording(null);
-        }
+              //get your photo after promise is returned (when recordAsync finishes)
+              photo = await photo;
+              navigation.navigate('Preview',{'photo':photo});
+            } else {
+              cameraRef.stopRecording()
+              setRecording(null);
+            }
 
-       }
+          }
       }}>
        <View style={{
          borderWidth: 2,
          borderRadius:"50%",
-         borderColor: recording ? "white":'red',
+         borderColor: 'white',
          height: 50,
          width:50,
          display: 'flex',
@@ -92,15 +96,28 @@ export default function CameraScreen({navigation}) {
          <View style={{
            borderWidth: 2,
            borderRadius:"50%",
-           borderColor: 'white',
+           borderColor: recording ? "red":'white',
            height: 40,
            width:40,
-           backgroundColor: 'white'}} >
+           backgroundColor: recording ? "red":'white'}} >
          </View>
        </View>
       </TouchableOpacity>
+
+      <View style={{height:20}}/>
+
     </View>
    </Camera>
   </View>
  );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
