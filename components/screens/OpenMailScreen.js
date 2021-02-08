@@ -24,7 +24,7 @@ export default function OpenMailScreen({ route, navigation }) {
  },[])
 
  const deleteFile = async () => {
-   Alert.alert('delete')
+   // Alert.alert('delete')
  };
 
 
