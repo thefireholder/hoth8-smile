@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Butto,Image } from 'react-native';
 import GoodButton from './src/components/GoodButton.js';
 import BadButton from './src/components/BadButton.js';
+import mailbox from '../../assets/image/mailbox.png'
 
 export default function QuestionScreen({navigation}) {
 
@@ -12,14 +13,20 @@ export default function QuestionScreen({navigation}) {
 
   return (
     <View style={styles.container}>
+    <View style={{width:'50%',aspectRatio:1,marginBottom:30}}>
+      <Image
+        style={{aspectRatio:1,flex:1,resizeMode: 'contain'}}
+        source={mailbox}
+      />
+    </View>
       <Text style={styles.header}>How are you feeling today?</Text>
-      <GoodButton 
+      <GoodButton
         title=" Good "
         onPress={()=>goto("Camera")}
       />
-      <BadButton 
+      <BadButton
         title="  Bad  "
-        onPress={()=>goto("Gallery")}
+        onPress={()=>goto("Mail")}
       />
     </View>
   );

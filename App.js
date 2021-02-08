@@ -12,6 +12,8 @@ import QuestionScreen from './components/screens/QuestionScreen.js';
 import ScriptScreen from './components/screens/ScriptScreen.js';
 import FileScreen from './components/screens/FileScreen.js';
 import MemoryScreen from './components/screens/MemoryScreen.js';
+import MailScreen from './components/screens/MailScreen.js';
+import OpenMailScreen from './components/screens/OpenMailScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,8 @@ function App() {
         <Stack.Screen name="Script" component={ScriptScreen} />
         <Stack.Screen name="File" component={FileScreen} />
         <Stack.Screen name="Memory" component={MemoryScreen} />
+        <Stack.Screen name="Mail" component={MailScreen} />
+        <Stack.Screen name="OpenMail" component={OpenMailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

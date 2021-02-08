@@ -37,6 +37,10 @@ export default function DetailsScreen({ navigation }) {
           onPress={()=>goto("Script")}
         />
         <Button
+          title="go to mail"
+          onPress={()=>goto("Mail")}
+        />
+        <Button
           title="DEVELOPER file"
           onPress={()=>goto("File")}
         />
