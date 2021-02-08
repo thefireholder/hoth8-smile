@@ -16,7 +16,7 @@ export default function MemoryScreen({ route, navigation }) {
  },[])
 
  const deleteFile = async () => {
-   Alert.alert('delete')
+   // Alert.alert('delete')
  };
 
 
