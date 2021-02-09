@@ -31,7 +31,7 @@ export default function MailScreen({navigation}) {
   },[navigation])
 
   const mb = n < 4 ? 0 : Math.floor((n-1)/3);
-  const m = n%3 ? n % 3: 3;
+  const m = n == 0 ? 0: (n%3 ? n % 3: 3);
 
     return (
       <View style={{ flex: 1,backgroundColor:'#B8e4b27f'}}>
@@ -50,19 +50,25 @@ export default function MailScreen({navigation}) {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View style={{left:-20,top:-20, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
+          {
+            (m > 0) ?
+            (
+              <View
+                style={{shadowOffset:{width:-10,height:-10},shadowOpacity:0.1,shadowRadius:10,position:'absolute'}}
+              >
+                <TouchableOpacity
+                  onPress={()=>navigation.navigate('OpenMail',{uri:firstFile,callback:updateMail})}
+                >
+                <Image
+                  style={{height:100,width:200}}
+                  source={mail2}
+                />
+                </TouchableOpacity>
+              </View>
+            )
+            : null
+          }
 
-          <View
-            style={{shadowOffset:{width:-10,height:-10},shadowOpacity:0.1,shadowRadius:10,position:'absolute'}}
-          >
-            <TouchableOpacity
-              onPress={()=>navigation.navigate('OpenMail',{uri:firstFile,callback:updateMail})}
-            >
-            <Image
-              style={{height:100,width:200}}
-              source={mail2}
-            />
-            </TouchableOpacity>
-          </View>
           {
             (m == 3 || m == 2) ?
             (
